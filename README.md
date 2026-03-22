@@ -2,6 +2,7 @@
 
 > [!WARNING]
 > Let op: dit is een code die 100% AI is opgebouwd
+
 > [!IMPORTANT]
 > De code moet nog veel meer aangepast worden
 
