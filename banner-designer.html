@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banner Designer — 200×100px</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --border: #2a2a35;
+    --accent: #7c6dfa;
+    --accent2: #fa6d9a;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 56px 1fr;
+  }
+
+  /* HEADER */
+  header {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  header .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  header .actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all .15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #9180fc; }
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); }
+
+  /* SIDEBAR */
+  aside {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 8px 10px 0;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 7px 4px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all .15s;
+    text-align: center;
+  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  .panel { display: none; padding: 14px; flex-direction: column; gap: 14px; flex: 1; }
+  .panel.active { display: flex; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 11px; color: var(--muted); }
+
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 7px 10px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color .15s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  select option { background: var(--surface2); }
+
+  input[type="color"] {
+    width: 100%;
+    height: 36px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--surface2);
+    padding: 2px;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+
+  .seg-ctrl { display: flex; background: var(--surface2); border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .seg-btn {
+    flex: 1;
+    padding: 6px 4px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all .15s;
+  }
+  .seg-btn.active { background: var(--accent); color: #fff; }
+  .seg-btn:hover:not(.active) { color: var(--text); }
+
+  .divider { height: 1px; background: var(--border); margin: 2px 0; }
+
+  .range-row { display: flex; align-items: center; gap: 8px; }
+  .range-val { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); min-width: 28px; text-align: right; }
+
+  /* MAIN CANVAS AREA */
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 40px 20px;
+    gap: 24px;
+    background: var(--bg);
+    overflow-y: auto;
+  }
+
+  .canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .canvas-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .canvas-container {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border), 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* checkerboard for transparency */
+  .canvas-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(45deg, #222 25%, transparent 25%),
+      linear-gradient(-45deg, #222 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #222 75%),
+      linear-gradient(-45deg, transparent 75%, #222 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 5px, 5px -5px, -5px 0;
+    z-index: 0;
+  }
+
+  #previewCanvas {
+    display: block;
+    position: relative;
+    z-index: 1;
+    /* preview at 2× scale */
+    width: 400px;
+    height: 200px;
+  }
+
+  .zoom-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .export-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* scrollbar */
+  aside::-webkit-scrollbar { width: 4px; }
+  aside::-webkit-scrollbar-track { background: transparent; }
+  aside::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .gradient-picks { display: flex; gap: 6px; }
+  .gradient-picks > * { flex: 1; }
+
+  .font-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .font-pick {
+    padding: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    text-align: center;
+    transition: all .15s;
+  }
+  .font-pick.active { border-color: var(--accent); color: var(--accent); }
+  .font-pick:hover:not(.active) { color: var(--text); }
+
+  .align-btns { display: flex; gap: 4px; }
+  .align-btn {
+    flex: 1;
+    padding: 7px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: all .15s;
+  }
+  .align-btn.active { border-color: var(--accent); color: var(--accent); }
+  .align-btn:hover:not(.active) { color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Banner Designer</h1>
+  <span class="badge">200 × 100 px</span>
+  <div class="actions">
+    <button class="btn btn-ghost" onclick="resetAll()">↺ Reset</button>
+    <button class="btn btn-secondary" onclick="copyToClipboard()">⎘ Kopieer</button>
+    <button class="btn btn-primary" onclick="downloadBanner()">↓ Download PNG</button>
+  </div>
+</header>
+
+<aside>
+  <div class="panel-tabs">
+    <button class="tab-btn active" onclick="switchTab('text', this)">Tekst</button>
+    <button class="tab-btn" onclick="switchTab('bg', this)">Achtergrond</button>
+    <button class="tab-btn" onclick="switchTab('icon', this)">Icoon</button>
+    <button class="tab-btn" onclick="switchTab('border', this)">Rand</button>
+  </div>
+
+  <!-- TEXT PANEL -->
+  <div class="panel active" id="panel-text">
+    <div class="field">
+      <div class="section-label">Tekst inhoud</div>
+      <input type="text" id="textContent" value="Mijn Banner" placeholder="Tekst..." oninput="render()">
+    </div>
+
+    <div class="field">
+      <label>Lettertype</label>
+      <div class="font-grid">
+        <div class="font-pick active" style="font-family:Arial" onclick="setFont('Arial',this)">Arial</div>
+        <div class="font-pick" style="font-family:Georgia" onclick="setFont('Georgia',this)">Georgia</div>
+        <div class="font-pick" style="font-family:'Impact'" onclick="setFont('Impact',this)">Impact</div>
+        <div class="font-pick" style="font-family:'Courier New'" onclick="setFont('Courier New',this)">Mono</div>
+        <div class="font-pick" style="font-family:'Trebuchet MS'" onclick="setFont('Trebuchet MS',this)">Trebuchet</div>
+        <div class="font-pick" style="font-family:'Verdana'" onclick="setFont('Verdana',this)">Verdana</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Grootte</label>
+        <input type="number" id="fontSize" value="18" min="6" max="80" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Kleur</label>
+        <input type="color" id="textColor" value="#ffffff" oninput="render()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Dikte</label>
+      <div class="seg-ctrl">
+        <button class="seg-btn" onclick="setWeight('normal',this)">Normaal</button>
+        <button class="seg-btn active" onclick="setWeight('bold',this)">Vet</button>
+        <button class="seg-btn" onclick="setWeight('900',this)">Zwaar</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Uitlijning</label>
+      <div class="align-btns">
+        <div class="align-btn" onclick="setAlign('left',this)">⬛◻◻</div>
+        <div class="align-btn active" onclick="setAlign('center',this)">◻⬛◻</div>
+        <div class="align-btn" onclick="setAlign('right',this)">◻◻⬛</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Verticale positie</label>
+      <div class="seg-ctrl">
+        <button class="seg-btn" onclick="setVAlign('top',this)">Boven</button>
+        <button class="seg-btn active" onclick="setVAlign('middle',this)">Midden</button>
+        <button class="seg-btn" onclick="setVAlign('bottom',this)">Onder</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Schaduw</label>
+      <div class="seg-ctrl">
+        <button class="seg-btn active" onclick="setShadow('none',this)">Geen</button>
+        <button class="seg-btn" onclick="setShadow('drop',this)">Druppel</button>
+        <button class="seg-btn" onclick="setShadow('glow',this)">Glow</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Letterafstand</label>
+      <div class="range-row">
+        <input type="range" id="letterSpacing" min="-3" max="15" value="0" step="0.5" oninput="updateRange(this,'lsVal');render()">
+        <span class="range-val" id="lsVal">0</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Opaciteit</label>
+      <div class="range-row">
+        <input type="range" id="textOpacity" min="0" max="100" value="100" oninput="updateRange(this,'toVal','%');render()">
+        <span class="range-val" id="toVal">100%</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field">
+      <div class="section-label">Subtekst (optioneel)</div>
+      <input type="text" id="subText" value="" placeholder="Subtitel..." oninput="render()">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Grootte</label>
+        <input type="number" id="subFontSize" value="10" min="6" max="40" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Kleur</label>
+        <input type="color" id="subColor" value="#cccccc" oninput="render()">
+      </div>
+    </div>
+  </div>
+
+  <!-- BACKGROUND PANEL -->
+  <div class="panel" id="panel-bg">
+    <div class="field">
+      <div class="section-label">Achtergrondtype</div>
+      <div class="seg-ctrl">
+        <button class="seg-btn active" onclick="setBgType('solid',this)">Kleur</button>
+        <button class="seg-btn" onclick="setBgType('gradient',this)">Verloop</button>
+        <button class="seg-btn" onclick="setBgType('image',this)">Afbeelding</button>
+      </div>
+    </div>
+
+    <div id="bg-solid">
+      <div class="field">
+        <label>Kleur</label>
+        <input type="color" id="bgColor" value="#1a1a2e" oninput="render()">
+      </div>
+    </div>
+
+    <div id="bg-gradient" style="display:none;display:none;flex-direction:column;gap:10px;">
+      <div class="field">
+        <label>Richting</label>
+        <div class="seg-ctrl">
+          <button class="seg-btn active" onclick="setGradDir('horizontal',this)">→</button>
+          <button class="seg-btn" onclick="setGradDir('vertical',this)">↓</button>
+          <button class="seg-btn" onclick="setGradDir('diagonal',this)">↘</button>
+          <button class="seg-btn" onclick="setGradDir('radial',this)">◎</button>
+        </div>
+      </div>
+      <div class="gradient-picks">
+        <div class="field">
+          <label>Kleur 1</label>
+          <input type="color" id="gradColor1" value="#7c6dfa" oninput="render()">
+        </div>
+        <div class="field">
+          <label>Kleur 2</label>
+          <input type="color" id="gradColor2" value="#fa6d9a" oninput="render()">
+        </div>
+      </div>
+    </div>
+
+    <div id="bg-image" style="display:none;flex-direction:column;gap:10px;">
+      <div class="field">
+        <label>Upload afbeelding</label>
+        <input type="file" id="bgImageFile" accept="image/*" onchange="loadBgImage(this)" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:7px 10px;font-size:11px;cursor:pointer;">
+      </div>
+      <div class="field">
+        <label>Donkerheid overlay</label>
+        <div class="range-row">
+          <input type="range" id="bgOverlay" min="0" max="90" value="30" oninput="updateRange(this,'ovVal','%');render()">
+          <span class="range-val" id="ovVal">30%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field">
+      <div class="section-label">Overlay effect</div>
+      <select id="overlayEffect" onchange="render()">
+        <option value="none">Geen</option>
+        <option value="gloss">Glans</option>
+        <option value="vignette">Vignet</option>
+        <option value="scanlines">Scanlijnen</option>
+        <option value="noise">Ruis</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Effect sterkte</label>
+      <div class="range-row">
+        <input type="range" id="effectStrength" min="0" max="100" value="50" oninput="updateRange(this,'esVal','%');render()">
+        <span class="range-val" id="esVal">50%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ICON PANEL -->
+  <div class="panel" id="panel-icon">
+    <div class="field">
+      <div class="section-label">Emoji / Icoon</div>
+      <input type="text" id="iconChar" value="" placeholder="bv. 🚀 ★ ♥" oninput="render()" style="font-size:20px;text-align:center;">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Grootte</label>
+        <input type="number" id="iconSize" value="32" min="8" max="90" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Positie</label>
+        <select id="iconPos" onchange="render()">
+          <option value="left">Links</option>
+          <option value="center">Midden</option>
+          <option value="right">Rechts</option>
+          <option value="bg">Achtergrond</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Opaciteit</label>
+      <div class="range-row">
+        <input type="range" id="iconOpacity" min="0" max="100" value="100" oninput="updateRange(this,'ioVal','%');render()">
+        <span class="range-val" id="ioVal">100%</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="field">
+      <div class="section-label">Afbeelding icoon</div>
+      <input type="file" id="iconImageFile" accept="image/*" onchange="loadIconImage(this)" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:7px 10px;font-size:11px;cursor:pointer;">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Breedte</label>
+        <input type="number" id="iconImgW" value="40" min="4" max="200" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Hoogte</label>
+        <input type="number" id="iconImgH" value="40" min="4" max="100" oninput="render()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>X positie</label>
+        <input type="number" id="iconImgX" value="10" min="0" max="196" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Y positie</label>
+        <input type="number" id="iconImgY" value="30" min="0" max="96" oninput="render()">
+      </div>
+    </div>
+  </div>
+
+  <!-- BORDER PANEL -->
+  <div class="panel" id="panel-border">
+    <div class="field">
+      <div class="section-label">Randdikte</div>
+      <div class="seg-ctrl">
+        <button class="seg-btn active" onclick="setBorderW(0,this)">Geen</button>
+        <button class="seg-btn" onclick="setBorderW(1,this)">Dun</button>
+        <button class="seg-btn" onclick="setBorderW(2,this)">Midden</button>
+        <button class="seg-btn" onclick="setBorderW(4,this)">Dik</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Kleur</label>
+      <input type="color" id="borderColor" value="#7c6dfa" oninput="render()">
+    </div>
+    <div class="field">
+      <label>Randstijl</label>
+      <div class="seg-ctrl">
+        <button class="seg-btn active" onclick="setBorderStyle('solid',this)">Lijn</button>
+        <button class="seg-btn" onclick="setBorderStyle('dashed',this)">Gestippeld</button>
+        <button class="seg-btn" onclick="setBorderStyle('double',this)">Dubbel</button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="field">
+      <div class="section-label">Ronde hoeken</div>
+      <div class="range-row">
+        <input type="range" id="cornerRadius" min="0" max="50" value="0" oninput="updateRange(this,'crVal','px');render()">
+        <span class="range-val" id="crVal">0px</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="field">
+      <div class="section-label">Export formaat</div>
+      <select id="exportScale" onchange="render()">
+        <option value="1">200×100px (1×)</option>
+        <option value="2" selected>400×200px (2×)</option>
+        <option value="3">600×300px (3×)</option>
+        <option value="4">800×400px (4×)</option>
+      </select>
+    </div>
+  </div>
+</aside>
+
+<main>
+  <div class="canvas-wrapper">
+    <div class="canvas-label">Preview — 200 × 100 px (2× weergave)</div>
+    <div class="canvas-container">
+      <canvas id="previewCanvas" width="200" height="100"></canvas>
+    </div>
+    <div class="zoom-hint">Klik Download om de banner op te slaan</div>
+  </div>
+</main>
+
+<canvas id="exportCanvas" style="display:none;"></canvas>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────
+const W = 200, H = 100;
+let state = {
+  text: 'Mijn Banner',
+  font: 'Arial',
+  fontSize: 18,
+  fontWeight: 'bold',
+  textColor: '#ffffff',
+  textAlign: 'center',
+  vAlign: 'middle',
+  shadow: 'none',
+  letterSpacing: 0,
+  textOpacity: 100,
+  subText: '',
+  subFontSize: 10,
+  subColor: '#cccccc',
+  bgType: 'solid',
+  bgColor: '#1a1a2e',
+  gradDir: 'horizontal',
+  gradColor1: '#7c6dfa',
+  gradColor2: '#fa6d9a',
+  bgImage: null,
+  bgOverlay: 30,
+  overlayEffect: 'none',
+  effectStrength: 50,
+  iconChar: '',
+  iconSize: 32,
+  iconPos: 'left',
+  iconOpacity: 100,
+  iconImage: null,
+  iconImgW: 40,
+  iconImgH: 40,
+  iconImgX: 10,
+  iconImgY: 30,
+  borderWidth: 0,
+  borderColor: '#7c6dfa',
+  borderStyle: 'solid',
+  cornerRadius: 0,
+  exportScale: 2
+};
+
+// ─── TAB SWITCHING ────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────
+function updateRange(el, valId, suffix='') {
+  document.getElementById(valId).textContent = el.value + suffix;
+}
+
+function setFont(f, el) {
+  state.font = f;
+  document.querySelectorAll('.font-pick').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setWeight(w, el) {
+  state.fontWeight = w;
+  el.parentElement.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setAlign(a, el) {
+  state.textAlign = a;
+  document.querySelectorAll('.align-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setVAlign(v, el) {
+  state.vAlign = v;
+  el.parentElement.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setShadow(s, el) {
+  state.shadow = s;
+  el.parentElement.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setBgType(t, el) {
+  state.bgType = t;
+  el.parentElement.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('bg-solid').style.display = t === 'solid' ? 'block' : 'none';
+  document.getElementById('bg-gradient').style.display = t === 'gradient' ? 'flex' : 'none';
+  document.getElementById('bg-image').style.display = t === 'image' ? 'flex' : 'none';
+  render();
+}
+
+function setGradDir(d, el) {
+  state.gradDir = d;
+  el.parentElement.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setBorderW(w, el) {
+  state.borderWidth = w;
+  el.parentElement.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setBorderStyle(s, el) {
+  state.borderStyle = s;
+  el.parentElement.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function loadBgImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const img = new Image();
+  img.onload = () => { state.bgImage = img; render(); };
+  img.src = URL.createObjectURL(file);
+}
+
+function loadIconImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const img = new Image();
+  img.onload = () => { state.iconImage = img; render(); };
+  img.src = URL.createObjectURL(file);
+}
+
+// ─── SYNC INPUTS ─────────────────────────────────────────────
+function syncState() {
+  state.text = document.getElementById('textContent').value;
+  state.fontSize = parseInt(document.getElementById('fontSize').value) || 18;
+  state.textColor = document.getElementById('textColor').value;
+  state.letterSpacing = parseFloat(document.getElementById('letterSpacing').value) || 0;
+  state.textOpacity = parseInt(document.getElementById('textOpacity').value);
+  state.subText = document.getElementById('subText').value;
+  state.subFontSize = parseInt(document.getElementById('subFontSize').value) || 10;
+  state.subColor = document.getElementById('subColor').value;
+  state.bgColor = document.getElementById('bgColor').value;
+  state.gradColor1 = document.getElementById('gradColor1').value;
+  state.gradColor2 = document.getElementById('gradColor2').value;
+  state.bgOverlay = parseInt(document.getElementById('bgOverlay').value);
+  state.overlayEffect = document.getElementById('overlayEffect').value;
+  state.effectStrength = parseInt(document.getElementById('effectStrength').value);
+  state.iconChar = document.getElementById('iconChar').value;
+  state.iconSize = parseInt(document.getElementById('iconSize').value) || 32;
+  state.iconPos = document.getElementById('iconPos').value;
+  state.iconOpacity = parseInt(document.getElementById('iconOpacity').value);
+  state.iconImgW = parseInt(document.getElementById('iconImgW').value) || 40;
+  state.iconImgH = parseInt(document.getElementById('iconImgH').value) || 40;
+  state.iconImgX = parseInt(document.getElementById('iconImgX').value) || 0;
+  state.iconImgY = parseInt(document.getElementById('iconImgY').value) || 0;
+  state.borderColor = document.getElementById('borderColor').value;
+  state.cornerRadius = parseInt(document.getElementById('cornerRadius').value);
+  state.exportScale = parseInt(document.getElementById('exportScale').value);
+}
+
+// ─── DRAW ────────────────────────────────────────────────────
+function drawBanner(ctx, w, h) {
+  const scale = w / W;
+
+  ctx.save();
+  ctx.clearRect(0, 0, w, h);
+
+  // Rounded clip
+  const r = state.cornerRadius * scale;
+  ctx.beginPath();
+  if (r > 0) {
+    ctx.moveTo(r, 0);
+    ctx.lineTo(w - r, 0);
+    ctx.quadraticCurveTo(w, 0, w, r);
+    ctx.lineTo(w, h - r);
+    ctx.quadraticCurveTo(w, h, w - r, h);
+    ctx.lineTo(r, h);
+    ctx.quadraticCurveTo(0, h, 0, h - r);
+    ctx.lineTo(0, r);
+    ctx.quadraticCurveTo(0, 0, r, 0);
+  } else {
+    ctx.rect(0, 0, w, h);
+  }
+  ctx.closePath();
+  ctx.clip();
+
+  // Background
+  if (state.bgType === 'solid') {
+    ctx.fillStyle = state.bgColor;
+    ctx.fillRect(0, 0, w, h);
+  } else if (state.bgType === 'gradient') {
+    let grad;
+    if (state.gradDir === 'horizontal') grad = ctx.createLinearGradient(0, 0, w, 0);
+    else if (state.gradDir === 'vertical') grad = ctx.createLinearGradient(0, 0, 0, h);
+    else if (state.gradDir === 'diagonal') grad = ctx.createLinearGradient(0, 0, w, h);
+    else grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, Math.max(w,h)/2);
+    grad.addColorStop(0, state.gradColor1);
+    grad.addColorStop(1, state.gradColor2);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+  } else if (state.bgType === 'image' && state.bgImage) {
+    ctx.drawImage(state.bgImage, 0, 0, w, h);
+    ctx.fillStyle = `rgba(0,0,0,${state.bgOverlay/100})`;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  // Overlay effects
+  const es = state.effectStrength / 100;
+  if (state.overlayEffect === 'gloss') {
+    const g = ctx.createLinearGradient(0, 0, 0, h * 0.55);
+    g.addColorStop(0, `rgba(255,255,255,${0.3 * es})`);
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+  } else if (state.overlayEffect === 'vignette') {
+    const g = ctx.createRadialGradient(w/2, h/2, h*0.2, w/2, h/2, Math.max(w,h)/1.5);
+    g.addColorStop(0, 'rgba(0,0,0,0)');
+    g.addColorStop(1, `rgba(0,0,0,${0.8 * es})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+  } else if (state.overlayEffect === 'scanlines') {
+    ctx.fillStyle = `rgba(0,0,0,${0.4 * es})`;
+    for (let y = 0; y < h; y += 2 * scale) {
+      ctx.fillRect(0, y, w, scale);
+    }
+  } else if (state.overlayEffect === 'noise') {
+    for (let i = 0; i < 2000 * es; i++) {
+      const nx = Math.random() * w;
+      const ny = Math.random() * h;
+      const v = Math.random() > 0.5 ? 255 : 0;
+      ctx.fillStyle = `rgba(${v},${v},${v},0.07)`;
+      ctx.fillRect(nx, ny, scale, scale);
+    }
+  }
+
+  // Background icon
+  if (state.iconChar && state.iconPos === 'bg') {
+    ctx.globalAlpha = (state.iconOpacity / 100) * 0.15;
+    ctx.font = `${state.iconSize * scale * 2.5}px serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(state.iconChar, w / 2, h / 2);
+    ctx.globalAlpha = 1;
+  }
+
+  // Layout: compute text X based on icon
+  let textAreaLeft = 0, textAreaRight = w;
+  const padding = 10 * scale;
+  const iconPad = state.iconChar && state.iconPos !== 'bg' ? (state.iconSize + 6) * scale : 0;
+
+  if (state.iconChar && state.iconPos === 'left') textAreaLeft = padding + iconPad;
+  else if (state.iconChar && state.iconPos === 'right') textAreaRight = w - padding - iconPad;
+  else if (state.iconChar && state.iconPos === 'center') {
+    textAreaLeft = padding;
+    textAreaRight = w - padding;
+  }
+
+  let textX;
+  if (state.textAlign === 'left') textX = textAreaLeft + padding;
+  else if (state.textAlign === 'right') textX = textAreaRight - padding;
+  else textX = (textAreaLeft + textAreaRight) / 2;
+
+  const hasSubText = state.subText && state.subText.trim() !== '';
+  const mainFs = state.fontSize * scale;
+  const subFs = state.subFontSize * scale;
+  const lineGap = 4 * scale;
+  const totalH = hasSubText ? mainFs + lineGap + subFs : mainFs;
+
+  let textY;
+  if (state.vAlign === 'top') textY = padding + mainFs / 2;
+  else if (state.vAlign === 'bottom') textY = h - padding - totalH + mainFs / 2;
+  else textY = h / 2 - totalH / 2 + mainFs / 2;
+
+  // Draw main text
+  const fontStr = `${state.fontWeight} ${mainFs}px "${state.font}", sans-serif`;
+  ctx.font = fontStr;
+  ctx.textAlign = state.textAlign;
+  ctx.textBaseline = 'middle';
+
+  ctx.globalAlpha = state.textOpacity / 100;
+
+  if (state.shadow === 'drop') {
+    ctx.shadowColor = 'rgba(0,0,0,0.6)';
+    ctx.shadowBlur = 4 * scale;
+    ctx.shadowOffsetX = 2 * scale;
+    ctx.shadowOffsetY = 2 * scale;
+  } else if (state.shadow === 'glow') {
+    ctx.shadowColor = state.textColor;
+    ctx.shadowBlur = 12 * scale;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+  }
+
+  ctx.fillStyle = state.textColor;
+
+  // Letter spacing support
+  if (state.letterSpacing !== 0) {
+    drawTextWithSpacing(ctx, state.text, textX, textY, state.letterSpacing * scale, state.textAlign, w);
+  } else {
+    ctx.fillText(state.text, textX, textY);
+  }
+
+  ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+
+  // Draw subtext
+  if (hasSubText) {
+    const subY = textY + mainFs / 2 + lineGap + subFs / 2;
+    ctx.font = `${subFs}px "${state.font}", sans-serif`;
+    ctx.fillStyle = state.subColor;
+    ctx.globalAlpha = state.textOpacity / 100;
+    ctx.fillText(state.subText, textX, subY);
+  }
+
+  ctx.globalAlpha = 1;
+
+  // Draw emoji icon (non-bg positions)
+  if (state.iconChar && state.iconPos !== 'bg') {
+    ctx.globalAlpha = state.iconOpacity / 100;
+    ctx.font = `${state.iconSize * scale}px serif`;
+    ctx.textBaseline = 'middle';
+    let ix;
+    if (state.iconPos === 'left') { ix = padding + (state.iconSize * scale) / 2; ctx.textAlign = 'center'; }
+    else if (state.iconPos === 'right') { ix = w - padding - (state.iconSize * scale) / 2; ctx.textAlign = 'center'; }
+    else { ix = w / 2; ctx.textAlign = 'center'; }
+    ctx.fillText(state.iconChar, ix, h / 2);
+    ctx.globalAlpha = 1;
+  }
+
+  // Draw uploaded icon image
+  if (state.iconImage) {
+    ctx.drawImage(state.iconImage,
+      state.iconImgX * scale, state.iconImgY * scale,
+      state.iconImgW * scale, state.iconImgH * scale);
+  }
+
+  // Border
+  if (state.borderWidth > 0) {
+    const bw = state.borderWidth * scale;
+    ctx.strokeStyle = state.borderColor;
+    ctx.lineWidth = bw;
+    if (state.borderStyle === 'dashed') ctx.setLineDash([6 * scale, 4 * scale]);
+    else ctx.setLineDash([]);
+
+    if (r > 0) {
+      ctx.beginPath();
+      ctx.moveTo(r + bw/2, bw/2);
+      ctx.lineTo(w - r - bw/2, bw/2);
+      ctx.quadraticCurveTo(w - bw/2, bw/2, w - bw/2, r + bw/2);
+      ctx.lineTo(w - bw/2, h - r - bw/2);
+      ctx.quadraticCurveTo(w - bw/2, h - bw/2, w - r - bw/2, h - bw/2);
+      ctx.lineTo(r + bw/2, h - bw/2);
+      ctx.quadraticCurveTo(bw/2, h - bw/2, bw/2, h - r - bw/2);
+      ctx.lineTo(bw/2, r + bw/2);
+      ctx.quadraticCurveTo(bw/2, bw/2, r + bw/2, bw/2);
+      ctx.closePath();
+      ctx.stroke();
+    } else {
+      ctx.strokeRect(bw/2, bw/2, w - bw, h - bw);
+    }
+    ctx.setLineDash([]);
+  }
+
+  ctx.restore();
+}
+
+function drawTextWithSpacing(ctx, text, x, y, spacing, align, totalW) {
+  const chars = [...text];
+  let totalWidth = 0;
+  const widths = chars.map(c => { const w = ctx.measureText(c).width; totalWidth += w; return w; });
+  totalWidth += spacing * (chars.length - 1);
+
+  let startX;
+  if (align === 'center') startX = x - totalWidth / 2;
+  else if (align === 'right') startX = x - totalWidth;
+  else startX = x;
+
+  let curX = startX;
+  chars.forEach((c, i) => {
+    ctx.fillText(c, curX + widths[i] / 2, y);
+    curX += widths[i] + spacing;
+  });
+}
+
+// ─── RENDER ──────────────────────────────────────────────────
+function render() {
+  syncState();
+  const canvas = document.getElementById('previewCanvas');
+  // Always display at 2x (400×200)
+  canvas.style.width = '400px';
+  canvas.style.height = '200px';
+  canvas.width = W * 2;
+  canvas.height = H * 2;
+  const ctx = canvas.getContext('2d');
+  drawBanner(ctx, W * 2, H * 2);
+}
+
+// ─── DOWNLOAD ────────────────────────────────────────────────
+function downloadBanner() {
+  syncState();
+  const scale = state.exportScale;
+  const ec = document.getElementById('exportCanvas');
+  ec.width = W * scale;
+  ec.height = H * scale;
+  const ctx = ec.getContext('2d');
+  drawBanner(ctx, W * scale, H * scale);
+
+  ec.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `banner-${W}x${H}.png`;
+    a.click();
+  });
+}
+
+// ─── COPY ────────────────────────────────────────────────────
+function copyToClipboard() {
+  syncState();
+  const ec = document.getElementById('exportCanvas');
+  ec.width = W * 2; ec.height = H * 2;
+  const ctx = ec.getContext('2d');
+  drawBanner(ctx, W * 2, H * 2);
+
+  ec.toBlob(blob => {
+    navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+      .then(() => alert('Gekopieerd naar klembord!'))
+      .catch(() => alert('Kopiëren mislukt. Gebruik Download.'));
+  });
+}
+
+// ─── RESET ───────────────────────────────────────────────────
+function resetAll() {
+  document.getElementById('textContent').value = 'Mijn Banner';
+  document.getElementById('fontSize').value = 18;
+  document.getElementById('textColor').value = '#ffffff';
+  document.getElementById('bgColor').value = '#1a1a2e';
+  document.getElementById('subText').value = '';
+  document.getElementById('iconChar').value = '';
+  document.getElementById('cornerRadius').value = 0;
+  document.getElementById('crVal').textContent = '0px';
+  document.getElementById('letterSpacing').value = 0;
+  document.getElementById('lsVal').textContent = '0';
+  state.bgImage = null;
+  state.iconImage = null;
+  render();
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
