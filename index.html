@@ -17,9 +17,28 @@
     --text: #e8e8f0;
     --muted: #6b6b80;
     --radius: 10px;
+    --checker1: #222;
+    --checker2: #333;
+  }
+
+  :root.light {
+    --bg: #f0f0f5;
+    --surface: #ffffff;
+    --surface2: #f5f5fa;
+    --border: #dddde8;
+    --accent: #6354e8;
+    --accent2: #e8356d;
+    --text: #18181f;
+    --muted: #8888a0;
+    --checker1: #ccc;
+    --checker2: #e8e8e8;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { transition: background .2s, color .2s; }
+  body { transition: background .2s; }
+  header, aside, .btn, input, select, .seg-ctrl, .divider { transition: background .2s, border-color .2s, color .2s; }
 
   body {
     background: var(--bg);
@@ -239,12 +258,13 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(45deg, #222 25%, transparent 25%),
-      linear-gradient(-45deg, #222 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #222 75%),
-      linear-gradient(-45deg, transparent 75%, #222 75%);
+      linear-gradient(45deg, var(--checker1) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--checker1) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--checker1) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--checker1) 75%);
     background-size: 10px 10px;
     background-position: 0 0, 0 5px, 5px -5px, -5px 0;
+    background-color: var(--checker2);
     z-index: 0;
   }
 
@@ -264,10 +284,23 @@
     letter-spacing: 0.5px;
   }
 
-  .export-row {
+  .theme-toggle {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all .15s;
+    font-weight: 500;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--accent); }
+  .theme-toggle .icon { font-size: 14px; line-height: 1; }
     justify-content: center;
   }
 
@@ -321,6 +354,7 @@
   <h1>Banner Designer</h1>
   <span class="badge">200 × 100 px</span>
   <div class="actions">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><span class="icon">☀️</span> Licht thema</button>
     <button class="btn btn-ghost" onclick="resetAll()">↺ Reset</button>
     <button class="btn btn-secondary" onclick="copyToClipboard()">⎘ Kopieer</button>
     <button class="btn btn-primary" onclick="downloadBanner()">↓ Download PNG</button>
@@ -1010,6 +1044,19 @@ function drawTextWithSpacing(ctx, text, x, y, spacing, align, totalW) {
   });
 }
 
+// ─── THEME ───────────────────────────────────────────────────
+let isLight = false;
+function toggleTheme() {
+  isLight = !isLight;
+  document.documentElement.classList.toggle('light', isLight);
+  const btn = document.getElementById('themeBtn');
+  btn.innerHTML = isLight
+    ? '<span class="icon">🌙</span> Donker thema'
+    : '<span class="icon">☀️</span> Licht thema';
+  // persist preference
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+
 // ─── RENDER ──────────────────────────────────────────────────
 function render() {
   syncState();
@@ -1074,6 +1121,12 @@ function resetAll() {
 }
 
 // ─── INIT ────────────────────────────────────────────────────
+// Restore saved theme
+if (localStorage.getItem('theme') === 'light') {
+  isLight = true;
+  document.documentElement.classList.add('light');
+  document.getElementById('themeBtn').innerHTML = '<span class="icon">🌙</span> Donker thema';
+}
 render();
 </script>
 </body>
