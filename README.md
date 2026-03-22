@@ -9,12 +9,6 @@
 Onofficiële, door de community ontwikkelde knop-, icoon en achtergrondontwerper voor Stream Deck+ en een +XL
 - Live: https://kirestreve.github.io/button-plus-designer/
 - Repo: https://github.com/KireStreve/button-plus-designer
-- 
-## Actie lijst
-- [ ] Code controelren als het werkt
-- [ ] Controleren als de export ook goed op een stream deck werkt
-- [ ] Fonts kunnen kiezen vanuit Google Fonts
-- [ ] ....
 
 ## Herkomst van deze fork
 Dit project is een fork van het oorspronkelijke project: https://github.com/adamgreenough/button-designer
@@ -47,34 +41,8 @@ Commercieel gebruik omvat onder andere, maar is niet beperkt tot:
 - Het bundelen van de software in betaalde producten of diensten
 - Het aanbieden van een gehoste of SaaS-versie met winstoogmerk
 
-
-## License
-
-This project is licensed under the [Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
-
-### You're free to:
-
-- Use, download, and fork the project for personal or educational purposes
-- Modify and build upon the source code
-- Share your changes, as long as they're released under the same license
-
-### Under the following conditions:
-
-- **Attribution** — You must give appropriate credit
-- **Non-Commercial** — You may not use this project, or derivatives of it, for commercial purposes
-- **Share-Alike** — Any derivative works must be licensed under CC BY-NC-SA 4.0
-
-### What counts as commercial use?
-
-Commercial use includes, but is not limited to: selling access to this tool, bundling it into paid products or services, or offering a hosted or SaaS version for profit.
-
-For the full license text, see: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-## Third-party Assets
-
-This project makes use of the following third-party assets:
-
-- **Google Material Symbols** by Google
-  - License: [Apache License 2.0](https://github.com/google/material-design-icons/blob/master/LICENSE)
-  - Used for the icon library within the designer.
-  - [View source](https://fonts.google.com/icons)
+## Actie lijst
+- [ ] Code controelren als het werkt
+- [ ] Controleren als de export ook goed op een stream deck werkt
+- [ ] Fonts kunnen kiezen vanuit Google Fonts
+- [ ] ....
