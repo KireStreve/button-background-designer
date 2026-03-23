@@ -7,7 +7,7 @@
 > De code moet verder uitgewerkt worden en is een hobby project
 
 Onofficiële, door de community ontwikkelde knop-, icoon en achtergrondontwerper voor Stream Deck+ en een +XL
-- Live: https://kirestreve.github.io/button-plus-designer/
+- Live: https://kirestreve.github.io/button-background-designer/
 - Repo: https://github.com/KireStreve/button-plus-designer
 
 ## Herkomst van deze fork
