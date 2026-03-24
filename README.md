@@ -1,19 +1,15 @@
 # button-background-designer
 
 > [!WARNING]
-> Let op: dit is een repo die 100% met AI is opgebouwd
+> Let op: dit is een repo die 100% met AI is opgebouwd en is mijn eerste codering ooit
 
-> [!IMPORTANT]
-> De code moet verder uitgewerkt worden en is een hobby project
-
-Onofficiële, door de community ontwikkelde knop-, icoon en achtergrondontwerper voor Stream Deck+ en een +XL
+Onofficiële, door de community ontwikkelde knop-, icoon en achtergrondontwerper voor [Stream Deck+](https://www.elgato.com/eu/nl/p/stream-deck-plus) en een [Stream Deck+XL](https://www.elgato.com/eu/nl/p/stream-deck-plus-xl)
 - Live: https://kirestreve.github.io/button-background-designer/
 - Repo: https://github.com/KireStreve/button-plus-designer
 
 ## Herkomst van deze fork
 Dit project is een fork van het oorspronkelijke project: https://github.com/adamgreenough/button-designer
 De aanleiding voor deze fork is het gebruik van de Stream Deck Plus, die beschikt over een touchstrip waarvan de achtergrond kan worden aangepast. Het visuele ontwerp en de gebruikservaring van het oorspronkelijke project worden als zeer aantrekkelijk ervaren, en deze fork is opgezet met als doel dit ontwerp uit te breiden voor ondersteuning van de touchstrip-functionaliteit.
-
 
 ## Disclaimer
 - **Onofficieel en onafhankelijk:** Dit project is niet gelieerd aan, onderschreven door, gesponsord door of op enige andere wijze goedgekeurd door Corsair, Elgato of het Stream Deck-merk.
