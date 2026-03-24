@@ -27,7 +27,7 @@ Onder deze licentie is het toegestaan om:
 
 ## Voorwaarden
 Bij gebruik van dit project gelden de volgende voorwaarden:
-- ** Naamsvermelding:** Passende bronvermelding is verplicht
+- **Naamsvermelding:** Passende bronvermelding is verplicht
 - **Niet-commercieel gebruik:** Het project en afgeleide werken mogen niet worden gebruikt voor commerciële doeleinden
 - **Gelijk delen:** Afgeleide werken moeten worden uitgebracht onder de CC BY-NC-SA 4.0-licentie
 
